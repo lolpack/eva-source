@@ -22,14 +22,44 @@ class Transformer {
    * Transforms `switch` to nested `if`-expressions.
    */
   transformSwitchToIf(switchExp) {
-    // Implement here: see Lecture 14
+    const [_tag, ...cases] = switchExp;
+
+    const ifExp = ['if', null, null, null];
+
+    let current = ifExp;
+
+    for (let i = 0; i < cases.length - 1; i ++) {
+      const [currCond, currentBlock] = cases [i];
+
+      current[1] = currCond;
+      current[2] = currentBlock;
+
+      const next = cases[i + 1];
+      const [nextCond, nextBlock] = next;
+
+      current[3]= nextCond === 'else'
+        ? nextBlock
+        : ['if'];
+
+      current = current[3];
+    }
+
+    return ifExp;
   }
 
   /**
    * Transforms `for` to `while`
    */
   transformForToWhile(forExp) {
-    // Implement here: see Lecture 14
+    const [_tag, init, condition, modifier, body ] = forExp;
+    const beginExp = 
+      ['begin', init, 
+        ['while', condition, 
+          ['begin', body, modifier] 
+        ]
+      ];
+
+    return beginExp;
   }
 
   /**

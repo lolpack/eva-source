@@ -12,8 +12,11 @@ module.exports = eva => {
   assert.strictEqual(eva.eval('VERSION'), '0.1');
 
   // var isUser = true;
+  // return var
   assert.strictEqual(eva.eval(['var', 'isUser', 'true']), true);
 
+  // var z = 2 * 2
+  // return z
   assert.strictEqual(eva.eval(['var', 'z', ['*', 2, 2]]), 4);
   assert.strictEqual(eva.eval('z'), 4);
 };

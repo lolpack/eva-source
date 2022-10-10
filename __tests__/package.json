@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "syntax-cli": "^0.1.26"
+  }
+}

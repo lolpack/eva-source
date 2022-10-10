@@ -23,13 +23,22 @@ const tests = [
   require('./import-test.js'),
 ];
 
-const eva = new Eva();
+const eva = new Eva(new Environment({
+  null: null,
+  true: true,
+  false: false,
+  VERSION: '0.1'
+}));
 
 function exec(code) {
   const exp = evaParser.parse(code);
   return eva.eval(exp);
 }
 
-tests.forEach(test => test(eva));
+tests.forEach(test => {
+  const eva = new Eva();
+
+  test(eva)
+});
 
 console.log('All assertions passed!');

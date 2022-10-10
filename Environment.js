@@ -19,6 +19,7 @@ class Environment {
    * Creates a variable with the given name and value.
    */
   define(name, value) {
+    // console.log('define', this)
     this.record[name] = value;
     return value;
   }
@@ -27,6 +28,7 @@ class Environment {
    * Updates an existing variable.
    */
   assign(name, value) {
+    // console.log('assign', this)
     this.resolve(name).record[name] = value;
     return value;
   }
@@ -44,7 +46,16 @@ class Environment {
    * throws if a variable is not defined.
    */
   resolve(name) {
-    // Implement here: see Lectures 6, 7
+    // console.log('resolve', this)
+    if (this.record.hasOwnProperty(name)) {
+      return this;
+    }
+
+    if(this.parent == null) {
+      throw new ReferenceError(`Variable "${name}" is not defined.`)
+    }
+
+    return this.parent.resolve(name);
   }
 }
 
